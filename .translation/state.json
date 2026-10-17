@@ -39,7 +39,7 @@
     },
     "02-机器人基础和控制、手眼协调/03机器人动力学.md": {
       "target": "en/02-robot-basics-control-and-hand-eye-coordination/03-robot-dynamics.md",
-      "sourceHash": "3abfd4b643470f091b1d9b8e4a13434a49bd29b582b9cf9080cf2e4fe66eb6a0",
+      "sourceHash": "6d5ee2cf43129cd6a99ef0f7915b3cc7b863ecaabaeb0675821e2c59101ea32e",
       "model": "tencent/Hy-MT2-1.8B-GGUF:Q4_K_M",
       "modelRevision": "dc5f44fcf1fa496ee7ad725982c0c8c553a4de00259b53af84c4b89fb0c06699"
     },
