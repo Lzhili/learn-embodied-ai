@@ -177,7 +177,7 @@
     },
     "05-具身场景的深度和强化学习/02HIMLoco-IsaacLab复现/README.md": {
       "target": "en/05-deep-and-reinforcement-learning/02-himloco-isaaclab-reproduction/README.md",
-      "sourceHash": "c01e6ac0cddaf910118caebed9bd938e669451e1872cdfa3dbe994c73b5f596a",
+      "sourceHash": "a5a01dd45b71cdabee3931f46ae311a2663d045d0680b85392e1e586002eabae",
       "model": "tencent/Hy-MT2-1.8B-GGUF:Q4_K_M",
       "modelRevision": "dc5f44fcf1fa496ee7ad725982c0c8c553a4de00259b53af84c4b89fb0c06699"
     },
@@ -1924,6 +1924,18 @@
     "03-机器人硬件、lerobot及地瓜RDK-X5开发板控制教程/10犀牛派X1机械臂的遥操控制.md": {
       "target": "en/03-robot-hardware-lerobot-and-rdk-x5/10-remote-control-of-the-10-rhino-party-x1-robotic-arm.md",
       "sourceHash": "7fa5594ab2980c144d23deb212b74e7231f845b19ae6fd94797ff83fc9dd6422",
+      "model": "tencent/Hy-MT2-1.8B-GGUF:Q4_K_M",
+      "modelRevision": "dc5f44fcf1fa496ee7ad725982c0c8c553a4de00259b53af84c4b89fb0c06699"
+    },
+    "03-机器人硬件、lerobot及地瓜RDK-X5开发板控制教程/11犀牛派X1部署VLM方法.md": {
+      "target": "en/03-robot-hardware-lerobot-and-rdk-x5/11-rhino-party-x1-deploys-vlm-method.md",
+      "sourceHash": "66301db0c931f6e7194500305f4ff0f9f5c48814db0c7cb226ed6639461fb147",
+      "model": "tencent/Hy-MT2-1.8B-GGUF:Q4_K_M",
+      "modelRevision": "dc5f44fcf1fa496ee7ad725982c0c8c553a4de00259b53af84c4b89fb0c06699"
+    },
+    "05-具身场景的深度和强化学习/02HIMLoco-IsaacLab复现/02迁移经验分享.md": {
+      "target": "en/05-deep-and-reinforcement-learning/02-himloco-isaaclab-reproduction/02-migration-experience-sharing.md",
+      "sourceHash": "7373caded6a7afb2ea302e5e90b3c2dacc347b407b27edcea6666421631aa200",
       "model": "tencent/Hy-MT2-1.8B-GGUF:Q4_K_M",
       "modelRevision": "dc5f44fcf1fa496ee7ad725982c0c8c553a4de00259b53af84c4b89fb0c06699"
     }
