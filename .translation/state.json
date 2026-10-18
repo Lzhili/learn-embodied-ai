@@ -45,7 +45,7 @@
     },
     "02-机器人基础和控制、手眼协调/04速度运动学与雅可比矩阵.md": {
       "target": "en/02-robot-basics-control-and-hand-eye-coordination/04-velocity-kinematics-and-jacobian-matrix.md",
-      "sourceHash": "5ab864a467083ef748b58aa2e08f36d406f6eee780c40be574ee8d62d8d212b8",
+      "sourceHash": "ae095da7c5fd13080d86fa4b00ee4804fc47760bf03e90bdb15eb2f0c43b28d3",
       "model": "tencent/Hy-MT2-1.8B-GGUF:Q4_K_M",
       "modelRevision": "dc5f44fcf1fa496ee7ad725982c0c8c553a4de00259b53af84c4b89fb0c06699"
     },
