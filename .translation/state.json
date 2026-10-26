@@ -33,7 +33,7 @@
     },
     "02-机器人基础和控制、手眼协调/02机器人运动学与 DH 参数.md": {
       "target": "en/02-robot-basics-control-and-hand-eye-coordination/02-robot-kinematics-and-dh-parameters.md",
-      "sourceHash": "4bf57ba6f60df406f910c82b218729ca3a6851a602f8b8f38803ca85b56cdd72",
+      "sourceHash": "ae2dee0194b35f27c6763998393513f1552812b820215189a6b726e7314bc735",
       "model": "tencent/Hy-MT2-1.8B-GGUF:Q4_K_M",
       "modelRevision": "dc5f44fcf1fa496ee7ad725982c0c8c553a4de00259b53af84c4b89fb0c06699"
     },
