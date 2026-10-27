@@ -57,13 +57,13 @@
     },
     "02-机器人基础和控制、手眼协调/补充01手眼协调.md": {
       "target": "en/02-robot-basics-control-and-hand-eye-coordination/supplement-01-hand-eye-coordination.md",
-      "sourceHash": "3443041129862d3a824fe0917778d8c469db91ebbe914ecc04c400ef0fbc40e3",
+      "sourceHash": "1a74b2e4e4894e3d4dd0ee95e3d97bc1d870b5c8814363a76e9d23165cde9b7d",
       "model": "tencent/Hy-MT2-1.8B-GGUF:Q4_K_M",
       "modelRevision": "dc5f44fcf1fa496ee7ad725982c0c8c553a4de00259b53af84c4b89fb0c06699"
     },
     "02-机器人基础和控制、手眼协调/补充02PID_Control.md": {
       "target": "en/02-robot-basics-control-and-hand-eye-coordination/supplement-02pid-control.md",
-      "sourceHash": "5726b65fe76c9beb801164a4d58e95b2fc2e62ecd70bf9970196e1139a45c7b6",
+      "sourceHash": "1dce367f2e53f8e723ffeb776bc30e6db18b073dc02968a3088216a4b6ce9f27",
       "model": "tencent/Hy-MT2-1.8B-GGUF:Q4_K_M",
       "modelRevision": "dc5f44fcf1fa496ee7ad725982c0c8c553a4de00259b53af84c4b89fb0c06699"
     },
@@ -1936,6 +1936,12 @@
     "05-具身场景的深度和强化学习/02HIMLoco-IsaacLab复现/02迁移经验分享.md": {
       "target": "en/05-deep-and-reinforcement-learning/02-himloco-isaaclab-reproduction/02-migration-experience-sharing.md",
       "sourceHash": "7373caded6a7afb2ea302e5e90b3c2dacc347b407b27edcea6666421631aa200",
+      "model": "tencent/Hy-MT2-1.8B-GGUF:Q4_K_M",
+      "modelRevision": "dc5f44fcf1fa496ee7ad725982c0c8c553a4de00259b53af84c4b89fb0c06699"
+    },
+    "02-机器人基础和控制、手眼协调/补充02PID_Control_笔记.md": {
+      "target": "en/02-robot-basics-control-and-hand-eye-coordination/supplement-02pid-control-notes.md",
+      "sourceHash": "4b650255ba67f8ad768ecbdc73d348386def1ef3ab417c0448d28088720918a8",
       "model": "tencent/Hy-MT2-1.8B-GGUF:Q4_K_M",
       "modelRevision": "dc5f44fcf1fa496ee7ad725982c0c8c553a4de00259b53af84c4b89fb0c06699"
     }
