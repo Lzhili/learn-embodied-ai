@@ -1,12 +1,5 @@
 # [PID控制算法以及代码实现]
 
-# 作者
-## [机智流硬件]  [冷小莫]  
-### [1412195676@qq.com]  
-
-## 日期
-[2024-12]
-
 ## 摘要
 - PID控制算法是工业自动化中最常用的控制算法之一。
 - PID通过计算当前输出与期望输出之间的误差，并根据该误差的比例（P）、积分（I）和微分（D）来调整控制输入，从而实现对系统的精确控制。
@@ -41,33 +34,33 @@ PID控制器通过以下三个基本组件来计算控制输入：
 #### （此处使用的是位置PID，增量式PID等可以根据实际情况进行修改，下面会进行详细说明）
 ``` 
 class PID:
-    # pid的初始化赋值
+    # 初始化：设置三个系数、目标值、采样周期
     def __init__(self, Kp, Ki, Kd, setpoint=0, sample_time=0.01):
-        self.Kp = Kp
-        self.Ki = Ki
-        self.Kd = Kd
-        self.setpoint = setpoint
-        self.sample_time = sample_time
- 
-        self.prev_error = 0
-        self.integral = 0
+        self.Kp = Kp                    # 比例系数 P（管快）
+        self.Ki = Ki                    # 积分系数 I（管准）
+        self.Kd = Kd                    # 微分系数 D（管稳）
+        self.setpoint = setpoint        # 目标值（期望输出）
+        self.sample_time = sample_time  # 采样周期（两次计算之间的间隔）
 
-    # pid的cal_process
+        self.prev_error = 0   # 上一次的误差，用于计算微分
+        self.integral = 0     # 误差累计（积分项）
+
+    # 每来一次测量值，就计算一次控制输出
     def update(self, measured_value):
-        error = self.setpoint - measured_value # 计算误差
-        self.integral += error * self.sample_time # 积分
-        derivative = (error - self.prev_error) / self. sample_time # 微分
- 
-        output = self.Kp * error + self.Ki * self.integral + self.Kd * derivative # 计算控制输入
-        self.prev_error = error # 保存误差
- 
-        return output
- 
+        error = self.setpoint - measured_value  # 1. 计算误差 = 目标值 - 实际值
+        self.integral += error * self.sample_time  # 2. 积分项：误差随时间累加
+        derivative = (error - self.prev_error) / self.sample_time  # 3. 微分项：误差的变化速度
 
-pid = PID(Kp=1.0, Ki=0.1, Kd=0.01, setpoint=100)
+        output = self.Kp * error + self.Ki * self.integral + self.Kd * derivative  # 4. 三项相加得到控制输出
+        self.prev_error = error  # 保存本次误差，供下次计算微分用
+
+        return output
+
+
+pid = PID(Kp=1.0, Ki=0.1, Kd=0.01, setpoint=100)  # 目标值设为 100
 measured_value = 90  # 假设的当前测量值
-control_input = pid.update(measured_value)
- 
+control_input = pid.update(measured_value)  # 计算一次控制量
+
 print(f"Control Input: {control_input}")
 
 ```
@@ -79,35 +72,39 @@ print(f"Control Input: {control_input}")
 ```
 void pid_init(pid_type_def *pid,uint8_t mode,float max_output,float max_iout,const float PID[3])
 {
-
-	pid->mode=mode;
-	pid->max_output=max_output;
-	pid->max_ioutput=max_iout;
-	pid->Dbuf[0]=pid->Dbuf[1]=pid->Dbuf[2];
-	pid->error[0]=pid->error[1]=pid->error[2]=pid->pout=pid->iout=pid->dout=0.0f;
+	// 初始化：设置模式、输出限幅、积分限幅，并清零历史数据
+	pid->mode=mode;             // 工作模式：位置式(PID_POSITION)或增量式(PID_DELTA)
+	pid->max_output=max_output; // 总输出限幅，防止输出过大
+	pid->max_ioutput=max_iout;  // 积分项限幅，防止积分饱和
+	pid->Dbuf[0]=pid->Dbuf[1]=pid->Dbuf[2]; // 微分历史缓冲（注意：此写法并未清零，疑似笔误，应为 =0.0f）
+	pid->error[0]=pid->error[1]=pid->error[2]=pid->pout=pid->iout=pid->dout=0.0f; // 误差与各输出项清零
 }
 
+/* 一次 PID 计算：ref=当前测量值，set=目标值，PID[3]={Kp,Ki,Kd}，返回控制输出 */
 float PID_calc(pid_type_def *pid,float ref,float set,float PID[3])
 {
-	pid->kp=PID[0];
-	pid->ki=PID[1];
-	pid->kd=PID[2];
-	
+	pid->kp=PID[0]; // 比例系数 P
+	pid->ki=PID[1]; // 积分系数 I
+	pid->kd=PID[2]; // 微分系数 D
+
+	// 误差队列后移，error[0] 始终保存最新误差
 	pid->error[2]=pid->error[1];
 	pid->error[1]=pid->error[0];
-	
-	pid->set=set;
-	pid->cur=ref;
-	
-	pid->error[0]=set-ref;
-	
-	if (pid->mode ==PID_POSITION)
+
+	pid->set=set;   // 目标值
+	pid->cur=ref;   // 当前测量值
+
+	pid->error[0]=set-ref; // 最新误差 = 目标值 - 测量值
+
+	if (pid->mode ==PID_POSITION) // ---- 位置式：输出绝对值 ----
 	{
-		pid->pout=pid->kp*pid->error[0];
-		pid->iout+=pid->ki*pid->error[0];
+		pid->pout=pid->kp*pid->error[0];  // P：比例项
+		pid->iout+=pid->ki*pid->error[0]; // I：积分累加
+		// D：微分缓冲后移，Dbuf[0] 存误差的一阶差分
 		pid->Dbuf[2]=pid->Dbuf[1];
 		pid->Dbuf[1]=pid->Dbuf[0];
 		pid->Dbuf[0]=pid->error[0]-pid->error[1];
+		// 积分限幅（上下限）
 		if (pid->iout>pid->max_ioutput)
 		{
 			pid->iout=pid->max_ioutput;
@@ -116,45 +113,51 @@ float PID_calc(pid_type_def *pid,float ref,float set,float PID[3])
 		{
 			pid->iout=-pid->max_ioutput;
 		}
+		// 积分分离：积分方向与误差方向相反时清零，防止超调
 		if (pid->iout*pid->error[0]<0)
 		{
 			pid->iout=0;
 		}
+		// ⚠️ 注意：下面条件恒为真（> 或 < 只有等于号不成立），实际未起到过滤作用，疑似笔误
 		if (pid->cur>0.707*pid->set || pid->cur<0.707*pid->set)
 		{
-				pid->dout=pid->kd*pid->Dbuf[0];
+				pid->dout=pid->kd*pid->Dbuf[0]; // D：微分项
 		}
 		else
 		{
 					pid->dout=0;
 		}
-		pid->output=pid->pout+pid->iout+pid->dout;
-		if (pid->output>pid->max_output)
+		pid->output=pid->pout+pid->iout+pid->dout; // 三项相加得到输出
+		if (pid->output>pid->max_output)          // 输出上限限幅
 		{
 			pid->output=pid->max_output;
 		}
 	}
-	
-	else if (pid->mode==PID_DELTA)
+
+	else if (pid->mode==PID_DELTA) // ---- 增量式：输出增量，叠加到上次输出 ----
 	{
-		pid->pout=pid->kp*(pid->error[0]-pid->error[1]);
-		pid->iout=pid->ki*pid->error[0];
+		pid->pout=pid->kp*(pid->error[0]-pid->error[1]); // P：误差的增量
+		pid->iout=pid->ki*pid->error[0];                 // I：只用当前误差
+		// 积分限幅
 		if (pid->iout>pid->max_ioutput)
 		{
 			pid->iout=pid->max_ioutput;
-		}		
+		}
 		else if (pid->iout<-pid->max_ioutput)
 		{
 			pid->iout=-pid->max_ioutput;
 		}
+		// 积分分离
 		if (pid->iout*pid->error[0]<0)
 		{
 			pid->iout=0;
 		}
+		// D：二阶差分 = e[k] - 2*e[k-1] + e[k-2]
 		pid->Dbuf[2]=pid->Dbuf[1];
 		pid->Dbuf[1]=pid->Dbuf[0];
 		pid->Dbuf[0]=pid->error[0]-2.0f*pid->error[1]+pid->error[2];
-		
+
+		// ⚠️ 注意：同位置式，条件恒为真，疑似笔误
 		if (pid->cur>0.707*pid->set || pid->cur<0.707*pid->set)
 		{
 				pid->dout=pid->kd*pid->Dbuf[0];
@@ -163,17 +166,16 @@ float PID_calc(pid_type_def *pid,float ref,float set,float PID[3])
 		{
 					pid->dout=0;
 		}
-				
-		pid->output+=pid->pout+pid->iout+pid->dout;
 
-		if (pid->output>pid->max_output)
+		pid->output+=pid->pout+pid->iout+pid->dout; // 增量式：累加到上次输出
+
+		if (pid->output>pid->max_output) // 输出上限限幅（注意：这里只限了上限，缺下限）
 		{
 			pid->output=pid->max_output;
 		}
 
-
 	}
-	
+
 	return pid->output;
 }
 
@@ -224,6 +226,15 @@ float PID_calc(pid_type_def *pid,float ref,float set,float PID[3])
             理想曲线两个波， 前高后低四比一。
 
             一看二调多分析， 调节质量不会低。
+```
+
+```
+翻译成大白话就几条经验：
+- 先调 P，再加 I，最后加 D——顺序别反。
+- 震荡频繁 → P 调小；曲线慢吞吞漂 → P 调大。
+- 恢复得慢（有稳态误差）→ 加大 I。
+- 超调大、波动慢 → 加大 D。
+- 理想波形是前高后低、两个小波峰（超调约 4:1）。
 ```
 
 
