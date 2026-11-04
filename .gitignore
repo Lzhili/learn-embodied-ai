@@ -222,3 +222,6 @@ lingbot_map_runs/
 *.usdc
 *.npz
 *.parquet
+
+
+.workbuddy
