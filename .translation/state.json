@@ -105,7 +105,7 @@
     },
     "03-机器人硬件、lerobot及地瓜RDK-X5开发板控制教程/05执行器原理与选型.md": {
       "target": "en/03-robot-hardware-lerobot-and-rdk-x5/05-actuator-principles-and-selection.md",
-      "sourceHash": "0de34cdb28b21984b2b1fe443b26682732284351abc41230f62cf2ef38e4123c",
+      "sourceHash": "f2733e0d8e92f3d4e7f7d0d77dfbe19487d3fa2981619aaa678b1a4599aa311a",
       "model": "tencent/Hy-MT2-1.8B-GGUF:Q4_K_M",
       "modelRevision": "dc5f44fcf1fa496ee7ad725982c0c8c553a4de00259b53af84c4b89fb0c06699"
     },
