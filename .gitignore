@@ -225,3 +225,8 @@ lingbot_map_runs/
 
 
 .workbuddy
+.DS_Store
+
+# 各章节 code/ 下的生成图与模型权重
+**/code/fig/
+**/code/model/
